@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		const user = users.find(u => u.email === email && u.password === password);
 		if (user) {
 			alert('✅ Đăng nhập thành công!');
-			window.location.href = '.../Main/Main.html';
+			window.location.href = 'https://jason2k11.github.io/SPCK_WEB/Main/Main.html';
 		} else {
 			alert('❌ Email hoặc mật khẩu không đúng!');
 		}
@@ -70,4 +70,5 @@ document.addEventListener("DOMContentLoaded", () => {
       client.requestAccessToken();
     });
   }
+
 });
