@@ -24,21 +24,39 @@ function initGoogleSignIn() {
     scope: "openid profile email",
     callback: (response) => {
       if (response.access_token) {
-
         localStorage.setItem("google_access_token", response.access_token);
-
-        alert("✅ Đăng nhập thành công!");
-
-        setTimeout(() => {
-            window.location.href = "http://127.0.0.1:5500/Main/Main.html";
-        }, 1500); 
-
+        
+        fetch(`https://www.googleapis.com/oauth2/v2/userinfo?access_token=${response.access_token}`)
+          .then(response => response.json())
+          .then(userInfo => {
+            console.log('User info:', userInfo);
+            localStorage.setItem("user_info", JSON.stringify(userInfo));
+            
+            alert("✅ Đăng nhập thành công!");
+            
+            setTimeout(() => {
+                window.location.href = "https://jason2k11.github.io/SPCK_WEB/Main/Main.html";
+            }, 1500); 
+          })
+          .catch(error => {
+            console.error('Error fetching user info:', error);
+            alert("❌ Lỗi lấy thông tin người dùng!");
+          });
       } else {
         alert("❌ Đăng nhập thất bại, vui lòng thử lại!");
       }
     },
   });
 }
+
+function signIn() {
+  if (client) {
+    client.requestAccessToken();
+  } else {
+    alert("Google Sign-In chưa được khởi tạo!");
+  }
+}
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const googleBtn = document.querySelector(".google-btn");
